@@ -57,6 +57,11 @@ namespace CnCMapSorter
 					foreach (var invalidChar in invalidFileChars)
 					{
 						author = author.Replace(Convert.ToString(invalidChar), "");
+
+						if (string.IsNullOrEmpty(author))
+						{
+							author = "z_Invalid_Name";
+						}
 					}
 					Directory.CreateDirectory(PATH_TO_CNC + author);
 
