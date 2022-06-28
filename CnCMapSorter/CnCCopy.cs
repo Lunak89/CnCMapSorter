@@ -9,22 +9,6 @@ namespace CnCMapSorter
 	public static class CnCCopy
 	{
 
-		/*
-		 * Folder: C:\Users\Lunak\Documents\CnCRemastered\Local_Custom_Maps\Tiberian_Dawn
-		Mapdata.ini
-			Author
-
-		CreateFOlder "Author"
-
-		Get Name of File
-
-		Move Files NOF.
-					BIN
-					INI
-					JSON
-					TGA
-
-*/
 		public static void DoCopy()
 		{
 			string PATH_TO_CNC = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\CnCRemastered\Local_Custom_Maps\Tiberian_Dawn\";
@@ -67,17 +51,12 @@ namespace CnCMapSorter
 
 
 					List<char> invalidFileChars = Path.GetInvalidPathChars().ToList();
-					invalidFileChars.Concat(Path.GetInvalidFileNameChars().ToList());
+					invalidFileChars.AddRange(Path.GetInvalidFileNameChars().ToList());
 
-
-
-					//Regex auf nur erlaubte Zeichen
 
 					foreach (var invalidChar in invalidFileChars)
 					{
-
-
-						author = author.Replace(invalidChar.ToString(), "");
+						author = author.Replace(Convert.ToString(invalidChar), "");
 					}
 					Directory.CreateDirectory(PATH_TO_CNC + author);
 
