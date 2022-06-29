@@ -12,6 +12,15 @@ namespace CnCMapSorter
 		private static readonly string PATH_TO_CNC = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\CnCRemastered\Local_Custom_Maps\Tiberian_Dawn\";
 		private static readonly int PATH_TO_CNC_LENGTH = PATH_TO_CNC.Length;
 
+		public static List<char> GetInvalidFileChars()
+		{
+
+			List<char> invalidFileChars = Path.GetInvalidPathChars().ToList();
+			invalidFileChars.AddRange(Path.GetInvalidFileNameChars().ToList());
+
+			return invalidFileChars;
+		}
+
 		public static void DoCopy()
 		{
 			Dictionary<String, string> mapsInDirectory = new();
@@ -29,7 +38,7 @@ namespace CnCMapSorter
 					{
 						if (line.StartsWith("Author="))
 						{
-							author = line.Split("=")[1];
+							author = "" + line.Split("=")?.GetValue(1);
 							mapsInDirectory.Add(key: map, value: author);
 						}
 					}
@@ -42,8 +51,7 @@ namespace CnCMapSorter
 					string mapName = map.Key[PATH_TO_CNC_LENGTH..^4]; //C# 8 lol
 
 
-					List<char> invalidFileChars = Path.GetInvalidPathChars().ToList();
-					invalidFileChars.AddRange(Path.GetInvalidFileNameChars().ToList());
+					List<char> invalidFileChars = GetInvalidFileChars();
 
 
 					foreach (var invalidChar in invalidFileChars)
