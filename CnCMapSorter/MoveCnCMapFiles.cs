@@ -28,7 +28,7 @@ namespace CnCMapSorter
 			}
 			catch (Exception e)
 			{
-				Debug.WriteLine("The file could not be read:");
+				Debug.WriteLine("The file could not be moved:");
 				Debug.WriteLine(e.Message);
 			}
 
