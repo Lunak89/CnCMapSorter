@@ -8,11 +8,11 @@ namespace CnCMapSorter
 {
 	public static class MoveCnCMapFiles
 	{
-		private static readonly List<String> FILE_TYPES = new() { ".INI", ".BIN", ".JSON", ".TGA" };
+		private static readonly List<string> FILE_TYPES = new() { ".INI", ".BIN", ".JSON", ".TGA" };
 		private static readonly string PATH_TO_CNC = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\CnCRemastered\Local_Custom_Maps\Tiberian_Dawn\";
 		private static readonly int PATH_TO_CNC_LENGTH = PATH_TO_CNC.Length;
-		private static List<char> invalidFileChars = new();
-		private static Dictionary<String, string> mapsInDirectory = new();
+		private static readonly List<char> invalidFileChars = new();
+		private static readonly Dictionary<string, string> mapsInDirectory = new();
 
 
 
@@ -34,10 +34,23 @@ namespace CnCMapSorter
 
 
 		}
+		public static void RevertToMainDirectory()
+		{
+			var folders = Directory.GetDirectories(PATH_TO_CNC);
+
+			foreach (var folder in folders)
+			{
+				foreach (var file in Directory.GetFiles(folder))
+				{
+					//File.Move(file, $"{PATH_TO_CNC}{author}\\{mapName}{fileType}", true);
+				}
+			}
+		}
+
 
 		private static void InitializeInvalidFileChars()
 		{
-			invalidFileChars = Path.GetInvalidPathChars().ToList();
+			invalidFileChars.AddRange(Path.GetInvalidPathChars().ToList());
 			invalidFileChars.AddRange(Path.GetInvalidFileNameChars().ToList()); // should be possible to declare in one line
 		}
 
@@ -99,10 +112,7 @@ namespace CnCMapSorter
 			return author;
 		}
 
-		public static void ToMainDirectory()
-		{
 
-		}
 
 	}
 }
