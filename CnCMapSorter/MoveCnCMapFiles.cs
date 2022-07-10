@@ -42,7 +42,7 @@ namespace CnCMapSorter
 			{
 				foreach (var file in Directory.GetFiles(folder))
 				{
-					//File.Move(file, $"{PATH_TO_CNC}{author}\\{mapName}{fileType}", true);
+					//Just an idea File.Move(file, $"{PATH_TO_CNC}{author}\\{mapName}{fileType}", true);
 				}
 			}
 		}
@@ -79,7 +79,6 @@ namespace CnCMapSorter
 			foreach (var map in mapsInDirectory)
 			{
 				string author = map.Value;
-				string mapNameAndPath = map.Key;
 				string mapName = map.Key[PATH_TO_CNC_LENGTH..^4]; //C# 8 lol
 
 
@@ -98,7 +97,7 @@ namespace CnCMapSorter
 
 
 
-		private static string SanitizeString(ref string author)
+		private static void SanitizeString(ref string author)
 		{
 			foreach (var invalidChar in invalidFileChars)
 			{
@@ -109,7 +108,6 @@ namespace CnCMapSorter
 					author = "z_Invalid_Name";
 				}
 			}
-			return author;
 		}
 
 
