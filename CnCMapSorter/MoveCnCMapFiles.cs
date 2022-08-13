@@ -67,7 +67,7 @@ namespace CnCMapSorter
 				{
 					if (line.StartsWith("Author="))
 					{
-						author = "" + line.Split("=")?.GetValue(1);
+						author = ("" + line.Split("=")?.GetValue(1)).Trim();
 						mapsInDirectory.Add(key: map, value: author);
 					}
 				}
@@ -88,7 +88,17 @@ namespace CnCMapSorter
 
 				foreach (var fileType in FILE_TYPES)
 				{
-					File.Move($"{PATH_TO_CNC}{mapName}{fileType}", $"{PATH_TO_CNC}{author}\\{mapName}{fileType}", true);
+					try
+					{
+						File.Move($"{PATH_TO_CNC}{mapName}{fileType}", $"{PATH_TO_CNC}{author}\\{mapName}{fileType}", true);
+					}
+					catch (DirectoryNotFoundException e)
+					{
+						Debug.WriteLine("Folder not Found: " + author);
+						Debug.WriteLine($"{PATH_TO_CNC}{mapName}{fileType}");
+						Debug.WriteLine($"{PATH_TO_CNC}{author}\\{mapName}{fileType}");
+						Debug.WriteLine(e.Message);
+					}
 				}
 
 
